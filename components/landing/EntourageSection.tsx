@@ -38,6 +38,7 @@ export function EntourageSection() {
                         OUR ENTOURAGE
                     </p>
                     <h2
+                        id="entourage-title"
                         className="text-wedding-charcoal text-4xl md:text-5xl lg:text-6xl mb-8"
                         style={{ fontFamily: "var(--font-heading)" }}
                     >

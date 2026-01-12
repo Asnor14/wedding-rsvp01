@@ -75,3 +75,16 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-wedding-antique);
 }
+
+/* Modal scrollbar - hidden but still scrollable */
+.modal-scroll {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.modal-scroll::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari and Opera */
+}

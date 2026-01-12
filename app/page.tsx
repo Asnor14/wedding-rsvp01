@@ -10,14 +10,14 @@ import { GallerySection } from "@/components/landing/GallerySection";
 import { RSVPSection } from "@/components/landing/RSVPSection";
 import { Footer } from "@/components/landing/Footer";
 import { SectionDots } from "@/components/ui/SectionDots";
-import { PaperPlane } from "@/components/ui/PaperPlane";
+import { MusicPlayer } from "@/components/ui/MusicPlayer";
 
 export default function Home() {
   return (
     <main className="bg-wedding-charcoal min-h-screen text-wedding-ivory selection:bg-wedding-gold/30">
       <Navigation />
       <SectionDots />
-      <PaperPlane />
+      <MusicPlayer />
       <HeroSection />
       <VenueSection />
       <DressCodeSection />

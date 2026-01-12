@@ -63,6 +63,7 @@ export function VenueSection() {
                         {/* Title */}
                         <div className="text-center lg:text-left">
                             <h2
+                                id="venue-title"
                                 className="text-wedding-charcoal text-4xl md:text-5xl lg:text-6xl mb-4"
                                 style={{ fontFamily: "var(--font-display)" }}
                             >

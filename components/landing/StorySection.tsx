@@ -22,6 +22,7 @@ export function StorySection() {
                         OUR STORY
                     </p>
                     <h2
+                        id="story-title"
                         className="text-wedding-charcoal text-4xl md:text-5xl lg:text-6xl mb-8"
                         style={{ fontFamily: "var(--font-heading)" }}
                     >

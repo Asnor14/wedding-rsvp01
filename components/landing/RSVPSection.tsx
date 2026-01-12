@@ -81,239 +81,242 @@ export function RSVPSection() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 50 }}
                             transition={{ type: "spring", duration: 0.5 }}
-                            className="relative z-10 w-full max-w-lg max-h-[90vh] overflow-y-auto bg-wedding-charcoal border border-wedding-gold/30 rounded-xl p-6 md:p-8"
+                            className="relative z-10 w-full max-w-lg max-h-[90vh] overflow-hidden bg-wedding-charcoal border border-wedding-gold/30 rounded-xl"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Close Button */}
-                            <button
-                                onClick={() => setShowFormModal(false)}
-                                className="absolute top-4 right-4 text-wedding-champagne/60 hover:text-wedding-ivory transition-colors"
-                            >
-                                <X size={24} />
-                            </button>
-
-                            {/* Header */}
-                            <div className="text-center mb-8">
-                                <h2
-                                    className="text-wedding-ivory text-4xl md:text-5xl mb-2"
-                                    style={{ fontFamily: "var(--font-display)" }}
+                            {/* Scrollable inner container */}
+                            <div className="overflow-y-auto max-h-[90vh] p-6 md:p-8 modal-scroll">
+                                {/* Close Button */}
+                                <button
+                                    onClick={() => setShowFormModal(false)}
+                                    className="absolute top-4 right-4 text-wedding-champagne/60 hover:text-wedding-ivory transition-colors"
                                 >
-                                    RSVP
-                                </h2>
-                                <p
-                                    className="text-wedding-champagne/80 text-sm"
-                                    style={{ fontFamily: "var(--font-body)" }}
-                                >
-                                    Please respond by January 15, 2026
-                                </p>
-                            </div>
+                                    <X size={24} />
+                                </button>
 
-                            {/* Form */}
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                {/* Full Name */}
-                                <div>
-                                    <label
-                                        className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
+                                {/* Header */}
+                                <div className="text-center mb-8">
+                                    <h2
+                                        className="text-wedding-ivory text-4xl md:text-5xl mb-2"
+                                        style={{ fontFamily: "var(--font-display)" }}
+                                    >
+                                        RSVP
+                                    </h2>
+                                    <p
+                                        className="text-wedding-champagne/80 text-sm"
                                         style={{ fontFamily: "var(--font-body)" }}
                                     >
-                                        Your Full Name <span className="text-wedding-gold">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 placeholder:text-wedding-champagne/50"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                        placeholder="Enter your full name"
-                                    />
+                                        Please respond by January 15, 2026
+                                    </p>
                                 </div>
 
-                                {/* Email */}
-                                <div>
-                                    <label
-                                        className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                    >
-                                        Email Address <span className="text-wedding-gold">*</span>
-                                    </label>
-                                    <input
-                                        type="email"
-                                        required
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 placeholder:text-wedding-champagne/50"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                        placeholder="your.email@example.com"
-                                    />
-                                </div>
-
-                                {/* Number of Guests */}
-                                <div>
-                                    <label
-                                        className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                    >
-                                        Number of Guests
-                                    </label>
-                                    <select
-                                        value={formData.guests}
-                                        onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                                        className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 cursor-pointer"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                    >
-                                        <option value="1" className="bg-wedding-charcoal">
-                                            1 Guest (Just me)
-                                        </option>
-                                        <option value="2" className="bg-wedding-charcoal">
-                                            2 Guests (Me + 1)
-                                        </option>
-                                    </select>
-                                </div>
-
-                                {/* Attendance - Radio Buttons */}
-                                <div>
-                                    <label
-                                        className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-4"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                    >
-                                        Will You Attend? <span className="text-wedding-gold">*</span>
-                                    </label>
-                                    <div className="flex gap-4">
+                                {/* Form */}
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    {/* Full Name */}
+                                    <div>
                                         <label
-                                            className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 ${formData.attending === "yes"
-                                                ? "border-wedding-gold bg-wedding-gold/20"
-                                                : "border-wedding-champagne/30 hover:border-wedding-champagne/60"
-                                                }`}
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="attending"
-                                                value="yes"
-                                                checked={formData.attending === "yes"}
-                                                onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
-                                                className="sr-only"
-                                                required
-                                            />
-                                            <Heart
-                                                className={`${formData.attending === "yes" ? "text-wedding-gold" : "text-wedding-champagne/50"}`}
-                                                size={18}
-                                                fill={formData.attending === "yes" ? "currentColor" : "none"}
-                                            />
-                                            <span
-                                                className={`text-xs ${formData.attending === "yes" ? "text-wedding-ivory" : "text-wedding-champagne/70"}`}
-                                                style={{ fontFamily: "var(--font-body)" }}
-                                            >
-                                                Accepting
-                                            </span>
-                                        </label>
-
-                                        <label
-                                            className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 ${formData.attending === "no"
-                                                ? "border-wedding-dove bg-wedding-dove/20"
-                                                : "border-wedding-champagne/30 hover:border-wedding-champagne/60"
-                                                }`}
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="attending"
-                                                value="no"
-                                                checked={formData.attending === "no"}
-                                                onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
-                                                className="sr-only"
-                                            />
-                                            <X
-                                                className={`${formData.attending === "no" ? "text-wedding-dove" : "text-wedding-champagne/50"}`}
-                                                size={18}
-                                            />
-                                            <span
-                                                className={`text-xs ${formData.attending === "no" ? "text-wedding-ivory" : "text-wedding-champagne/70"}`}
-                                                style={{ fontFamily: "var(--font-body)" }}
-                                            >
-                                                Declining
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                {/* Message */}
-                                <div>
-                                    <label
-                                        className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                    >
-                                        Message (Optional)
-                                    </label>
-                                    <textarea
-                                        value={formData.message}
-                                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                        rows={3}
-                                        className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 resize-none placeholder:text-wedding-champagne/50"
-                                        style={{ fontFamily: "var(--font-body)" }}
-                                        placeholder="Share your wishes..."
-                                    />
-                                </div>
-
-                                {/* Error Message */}
-                                {error && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        className="bg-red-500/20 border border-red-500/40 rounded-lg p-3"
-                                    >
-                                        <p
-                                            className="text-red-300 text-sm text-center"
+                                            className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
                                             style={{ fontFamily: "var(--font-body)" }}
                                         >
-                                            {error}
-                                        </p>
-                                    </motion.div>
-                                )}
+                                            Your Full Name <span className="text-wedding-gold">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.name}
+                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 placeholder:text-wedding-champagne/50"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                            placeholder="Enter your full name"
+                                        />
+                                    </div>
 
-                                {/* Submit Button */}
-                                <motion.button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    whileHover={!isSubmitting ? { scale: 1.02 } : {}}
-                                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-                                    className={`w-full bg-wedding-gold text-wedding-charcoal py-4 text-sm tracking-[0.2em] uppercase font-bold transition-all duration-300 flex items-center justify-center gap-3 rounded-lg shadow-xl ${isSubmitting
-                                        ? "opacity-70 cursor-not-allowed"
-                                        : "hover:bg-wedding-antique"
-                                        }`}
-                                    style={{ fontFamily: "var(--font-body)" }}
-                                >
-                                    {isSubmitting ? (
-                                        <>
-                                            <svg
-                                                className="animate-spin h-4 w-4"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
+                                    {/* Email */}
+                                    <div>
+                                        <label
+                                            className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                        >
+                                            Email Address <span className="text-wedding-gold">*</span>
+                                        </label>
+                                        <input
+                                            type="email"
+                                            required
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                            className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 placeholder:text-wedding-champagne/50"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                            placeholder="your.email@example.com"
+                                        />
+                                    </div>
+
+                                    {/* Number of Guests */}
+                                    <div>
+                                        <label
+                                            className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                        >
+                                            Number of Guests
+                                        </label>
+                                        <select
+                                            value={formData.guests}
+                                            onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
+                                            className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 cursor-pointer"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                        >
+                                            <option value="1" className="bg-wedding-charcoal">
+                                                1 Guest (Just me)
+                                            </option>
+                                            <option value="2" className="bg-wedding-charcoal">
+                                                2 Guests (Me + 1)
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    {/* Attendance - Radio Buttons */}
+                                    <div>
+                                        <label
+                                            className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-4"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                        >
+                                            Will You Attend? <span className="text-wedding-gold">*</span>
+                                        </label>
+                                        <div className="flex gap-4">
+                                            <label
+                                                className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 ${formData.attending === "yes"
+                                                    ? "border-wedding-gold bg-wedding-gold/20"
+                                                    : "border-wedding-champagne/30 hover:border-wedding-champagne/60"
+                                                    }`}
                                             >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
+                                                <input
+                                                    type="radio"
+                                                    name="attending"
+                                                    value="yes"
+                                                    checked={formData.attending === "yes"}
+                                                    onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
+                                                    className="sr-only"
+                                                    required
                                                 />
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                <Heart
+                                                    className={`${formData.attending === "yes" ? "text-wedding-gold" : "text-wedding-champagne/50"}`}
+                                                    size={18}
+                                                    fill={formData.attending === "yes" ? "currentColor" : "none"}
                                                 />
-                                            </svg>
-                                            Sending...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Send size={16} />
-                                            Send RSVP
-                                        </>
+                                                <span
+                                                    className={`text-xs ${formData.attending === "yes" ? "text-wedding-ivory" : "text-wedding-champagne/70"}`}
+                                                    style={{ fontFamily: "var(--font-body)" }}
+                                                >
+                                                    Accepting
+                                                </span>
+                                            </label>
+
+                                            <label
+                                                className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all duration-300 ${formData.attending === "no"
+                                                    ? "border-wedding-dove bg-wedding-dove/20"
+                                                    : "border-wedding-champagne/30 hover:border-wedding-champagne/60"
+                                                    }`}
+                                            >
+                                                <input
+                                                    type="radio"
+                                                    name="attending"
+                                                    value="no"
+                                                    checked={formData.attending === "no"}
+                                                    onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
+                                                    className="sr-only"
+                                                />
+                                                <X
+                                                    className={`${formData.attending === "no" ? "text-wedding-dove" : "text-wedding-champagne/50"}`}
+                                                    size={18}
+                                                />
+                                                <span
+                                                    className={`text-xs ${formData.attending === "no" ? "text-wedding-ivory" : "text-wedding-champagne/70"}`}
+                                                    style={{ fontFamily: "var(--font-body)" }}
+                                                >
+                                                    Declining
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    {/* Message */}
+                                    <div>
+                                        <label
+                                            className="block text-wedding-gold text-xs tracking-[0.2em] uppercase mb-2"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                        >
+                                            Message (Optional)
+                                        </label>
+                                        <textarea
+                                            value={formData.message}
+                                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                            rows={3}
+                                            className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-gold focus:outline-none transition-all duration-300 resize-none placeholder:text-wedding-champagne/50"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                            placeholder="Share your wishes..."
+                                        />
+                                    </div>
+
+                                    {/* Error Message */}
+                                    {error && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="bg-red-500/20 border border-red-500/40 rounded-lg p-3"
+                                        >
+                                            <p
+                                                className="text-red-300 text-sm text-center"
+                                                style={{ fontFamily: "var(--font-body)" }}
+                                            >
+                                                {error}
+                                            </p>
+                                        </motion.div>
                                     )}
-                                </motion.button>
-                            </form>
+
+                                    {/* Submit Button */}
+                                    <motion.button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+                                        whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                                        className={`w-full bg-wedding-gold text-wedding-charcoal py-4 text-sm tracking-[0.2em] uppercase font-bold transition-all duration-300 flex items-center justify-center gap-3 rounded-lg shadow-xl ${isSubmitting
+                                            ? "opacity-70 cursor-not-allowed"
+                                            : "hover:bg-wedding-antique"
+                                            }`}
+                                        style={{ fontFamily: "var(--font-body)" }}
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <svg
+                                                    className="animate-spin h-4 w-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <circle
+                                                        className="opacity-25"
+                                                        cx="12"
+                                                        cy="12"
+                                                        r="10"
+                                                        stroke="currentColor"
+                                                        strokeWidth="4"
+                                                    />
+                                                    <path
+                                                        className="opacity-75"
+                                                        fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                    />
+                                                </svg>
+                                                Sending...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Send size={16} />
+                                                Send RSVP
+                                            </>
+                                        )}
+                                    </motion.button>
+                                </form>
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}
@@ -355,6 +358,7 @@ export function RSVPSection() {
 
                     {/* Pulsing RSVP Button */}
                     <motion.button
+                        id="rsvp-button"
                         onClick={() => setShowFormModal(true)}
                         className="relative bg-wedding-gold text-wedding-charcoal px-12 md:px-16 py-4 md:py-5 text-sm md:text-base tracking-[0.2em] uppercase font-bold rounded-lg shadow-xl hover:bg-wedding-antique transition-colors flex items-center gap-3 mx-auto"
                         style={{ fontFamily: "var(--font-body)" }}
@@ -387,7 +391,16 @@ export function RSVPSection() {
                                 delay: 0.3,
                             }}
                         />
-                        <Send size={18} className="relative z-10" />
+                        {/* Send icon - empty space for plane to land */}
+                        <motion.span
+                            className="relative z-10 w-[18px] h-[18px] flex items-center justify-center"
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 1.5, duration: 0.5 }}
+                        >
+                            <Send size={18} style={{ transform: "rotate(-45deg)" }} />
+                        </motion.span>
                         <span className="relative z-10">Respond Now</span>
                     </motion.button>
 

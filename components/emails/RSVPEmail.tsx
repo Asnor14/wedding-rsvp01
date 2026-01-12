@@ -90,18 +90,17 @@ export default function RSVPEmail({
                         <Section style={eventSection}>
                             <Text style={eventTitle}>Event Details</Text>
                             <Text style={eventDetail}>
-                                📅 <strong>December 31, 2025</strong>
+                                📅 <strong>February 14, 2026</strong>
                             </Text>
                             <Text style={eventDetail}>
-                                🕓 <strong>Ceremony:</strong> 4:00 PM
-                            </Text>
-                            <Text style={eventDetail}>
-                                🍽️ <strong>Reception:</strong> 6:30 PM
-                            </Text>
-                            <Text style={eventDetail}>
-                                📍 <strong>Château de Lumière</strong>
+                                🕓 <strong>Ceremony:</strong> 3:00 PM
                                 <br />
-                                123 Elegance Avenue, Beverly Hills, CA 90210
+                                <span style={subDetail}>San Lorenzo Ruiz Parish Church, San Vicente, Tarlac City</span>
+                            </Text>
+                            <Text style={eventDetail}>
+                                🍽️ <strong>Reception:</strong> 5:00 PM
+                                <br />
+                                <span style={subDetail}>The Bella Plaza, San Sebastian Village, Tarlac City</span>
                             </Text>
                         </Section>
                     )}
@@ -110,7 +109,7 @@ export default function RSVPEmail({
                     <Section style={closingSection}>
                         <Text style={closing}>With love,</Text>
                         <Text style={signature}>
-                            Name & Name
+                            Godfrey & Vanesa
                         </Text>
                     </Section>
 
@@ -282,7 +281,14 @@ const eventDetail = {
     color: "#4A4A4A",
     fontSize: "15px",
     lineHeight: "1.8",
-    margin: "0 0 8px",
+    margin: "0 0 12px",
+};
+
+const subDetail = {
+    color: "#6B6B6B",
+    fontSize: "13px",
+    display: "block",
+    marginTop: "4px",
 };
 
 const closingSection = {
