@@ -1,56 +1,511 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+    Heart,
+    ChevronLeft,
+    ChevronRight,
+    Play,
+    Pause,
+} from "lucide-react";
+import Image from "next/image";
+
+// Story data structure
+interface Story {
+    id: number;
+    title: string;
+    date: string;
+    content: string;
+    images: string[];
+}
+
+// Story content based on the Google Doc
+const stories: Story[] = [
+    {
+        id: 1,
+        title: "Where It All Began",
+        date: "2019",
+        content:
+            "We met at work, in the most ordinary way. Godfrey fell in love with Vanesa right away; Vanesa took a little longer. Three months of papansin Messenger chats followed—most of them unanswered—until one question finally landed: \"Hi Nes... Galing Mindoro yan. Kumakain ka niyan?\"",
+        images: ["/photos/1.jpg"],
+    },
+    {
+        id: 2,
+        title: "The Pursuer",
+        date: "2019 - 2020",
+        content:
+            "Godfrey never gave up. Every smile, every small moment became an opportunity to show his intentions. What started as casual conversations slowly turned into something more meaningful. Vanesa began to see the sincerity behind every gesture.",
+        images: ["/photos/2.png"],
+    },
+    {
+        id: 3,
+        title: "Falling In Love",
+        date: "2020 - 2021",
+        content:
+            "Time revealed what the heart already knew. Through late night talks, shared dreams, and countless adventures together, love blossomed naturally. Every day brought them closer, and what once was uncertainty became beautiful certainty.",
+        images: ["/photos/3.1.jpg", "/photos/3.2.jfif", "/photos/3.3.png"],
+    },
+    {
+        id: 4,
+        title: "Building Our Forever",
+        date: "2022 - 2024",
+        content:
+            "Together through every storm and every sunshine, they built a bond unshakeable. From simple dates to life's biggest decisions, they proved that true love grows stronger with time. Every challenge became a stepping stone to forever.",
+        images: ["/photos/4.1.jpg", "/photos/4.2.jfif", "/photos/4.3.jpg", "/photos/4.4.jpg"],
+    },
+    {
+        id: 5,
+        title: "Forever Starts Now",
+        date: "February 14, 2026",
+        content:
+            "And now, we stand at the beginning of our greatest adventure yet. With hearts full of love and dreams of tomorrow, we invite you to witness the start of our forever. This isn't just a wedding—it's the celebration of a love story years in the making.",
+        images: ["/photos/5.jpeg"],
+    },
+];
+
+// Animation duration in seconds
+const AUTO_ADVANCE_DURATION = 5;
 
 export function StorySection() {
-    return (
-        <section id="story" className="bg-wedding-ivory">
-            <div className="max-w-4xl mx-auto px-6 py-16 md:py-24 lg:py-32">
-                {/* Header */}
-                <motion.div
-                    className="text-center mb-12 md:mb-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <p
-                        className="text-wedding-gold text-xs tracking-[0.3em] mb-4"
-                        style={{ fontFamily: "var(--font-body)" }}
-                    >
-                        OUR STORY
-                    </p>
-                    <h2
-                        id="story-title"
-                        className="text-wedding-charcoal text-4xl md:text-5xl lg:text-6xl mb-8"
-                        style={{ fontFamily: "var(--font-heading)" }}
-                    >
-                        How We Met
-                    </h2>
-                    <div className="w-16 h-[1px] bg-wedding-gold mx-auto" />
-                </motion.div>
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [progress, setProgress] = useState(0);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
+    const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const autoAdvanceRef = useRef<NodeJS.Timeout | null>(null);
 
-                {/* To Follow Message */}
-                <motion.div
-                    className="text-center"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+    const currentStory = stories[currentIndex];
+
+    // Clear all timers
+    const clearTimers = useCallback(() => {
+        if (progressIntervalRef.current) {
+            clearInterval(progressIntervalRef.current);
+            progressIntervalRef.current = null;
+        }
+        if (autoAdvanceRef.current) {
+            clearTimeout(autoAdvanceRef.current);
+            autoAdvanceRef.current = null;
+        }
+    }, []);
+
+    // Go to next story
+    const goToNext = useCallback(() => {
+        setCurrentIndex((prev) => (prev + 1) % stories.length);
+        setCurrentImageIndex(0);
+        setProgress(0);
+    }, []);
+
+    // Go to previous story
+    const goToPrevious = useCallback(() => {
+        setCurrentIndex((prev) => (prev - 1 + stories.length) % stories.length);
+        setCurrentImageIndex(0);
+        setProgress(0);
+    }, []);
+
+    // Go to specific story
+    const goToStory = useCallback((index: number) => {
+        setCurrentIndex(index);
+        setCurrentImageIndex(0);
+        setProgress(0);
+    }, []);
+
+    // Toggle play/pause
+    const togglePlayPause = useCallback(() => {
+        setIsPlaying((prev) => !prev);
+    }, []);
+
+    // Auto-advance and progress bar logic
+    useEffect(() => {
+        if (!isPlaying || isHovered) {
+            clearTimers();
+            return;
+        }
+
+        // Progress bar update (every 50ms for smooth animation)
+        const progressIncrement = 100 / (AUTO_ADVANCE_DURATION * 20); // 20 updates per second
+        progressIntervalRef.current = setInterval(() => {
+            setProgress((prev) => {
+                if (prev >= 100) return 100;
+                return prev + progressIncrement;
+            });
+        }, 50);
+
+        // Auto-advance to next story
+        autoAdvanceRef.current = setTimeout(() => {
+            goToNext();
+        }, AUTO_ADVANCE_DURATION * 1000);
+
+        return () => clearTimers();
+    }, [isPlaying, isHovered, currentIndex, goToNext, clearTimers]);
+
+    // Cycle through images if current story has multiple
+    useEffect(() => {
+        if (currentStory.images.length <= 1) return;
+
+        const imageInterval = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % currentStory.images.length);
+        }, 2500);
+
+        return () => clearInterval(imageInterval);
+    }, [currentStory.images.length, currentIndex]);
+
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "ArrowLeft") {
+                goToPrevious();
+                setIsPlaying(false);
+            } else if (e.key === "ArrowRight") {
+                goToNext();
+                setIsPlaying(false);
+            } else if (e.key === " ") {
+                e.preventDefault();
+                togglePlayPause();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [goToNext, goToPrevious, togglePlayPause]);
+
+    return (
+        <section
+            id="story"
+            className="relative bg-wedding-ivory min-h-screen overflow-hidden"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-5">
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at 2px 2px, var(--color-wedding-gold) 1px, transparent 0)`,
+                        backgroundSize: "40px 40px",
+                    }}
+                />
+            </div>
+
+            {/* Section Header */}
+            <motion.div
+                className="relative z-10 text-center pt-16 md:pt-24 pb-8 md:pb-12"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+            >
+                <p
+                    className="text-wedding-gold text-xs tracking-[0.3em] mb-4"
+                    style={{ fontFamily: "var(--font-body)" }}
                 >
-                    <p
-                        className="text-wedding-dove text-xl md:text-2xl italic"
-                        style={{ fontFamily: "var(--font-heading)" }}
+                    OUR STORY
+                </p>
+                <h2
+                    id="story-title"
+                    className="text-wedding-charcoal text-4xl md:text-5xl lg:text-6xl mb-6"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                >
+                    How We Met
+                </h2>
+                <div className="w-16 h-[1px] bg-wedding-gold mx-auto" />
+            </motion.div>
+
+            {/* Story Content */}
+            <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-8">
+                <div className="relative">
+                    {/* Main Story Card */}
+                    <div className="grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-16 items-center min-h-[60vh]">
+                        {/* Image Side */}
+                        <div className="relative order-1 md:order-1">
+                            <div className="relative aspect-[4/5] md:aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl">
+                                {/* Image Crossfade Animation */}
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={`${currentIndex}-${currentImageIndex}`}
+                                        initial={{ opacity: 0, scale: 1.05 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                                        className="absolute inset-0"
+                                    >
+                                        <Image
+                                            src={currentStory.images[currentImageIndex]}
+                                            alt={currentStory.title}
+                                            fill
+                                            className="object-cover"
+                                            priority={currentIndex === 0}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
+                                        {/* Gradient Overlay */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-wedding-charcoal/40 via-transparent to-transparent" />
+                                    </motion.div>
+                                </AnimatePresence>
+
+                                {/* Image Indicators (if multiple images) */}
+                                {currentStory.images.length > 1 && (
+                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                                        {currentStory.images.map((_, imgIdx) => (
+                                            <div
+                                                key={imgIdx}
+                                                className={`h-1.5 rounded-full transition-all duration-300 ${imgIdx === currentImageIndex
+                                                    ? "w-6 bg-white"
+                                                    : "w-1.5 bg-white/50"
+                                                    }`}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Date Badge */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: -20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3, duration: 0.5 }}
+                                    className="absolute top-4 left-4 md:top-6 md:left-6 z-20"
+                                >
+                                    <div className="bg-wedding-gold/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                                        <span
+                                            className="text-wedding-charcoal text-xs md:text-sm font-semibold tracking-wider"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                        >
+                                            {currentStory.date}
+                                        </span>
+                                    </div>
+                                </motion.div>
+
+                                {/* Story Number */}
+                                <div className="absolute top-4 right-4 md:top-6 md:right-6 z-20">
+                                    <div className="bg-wedding-charcoal/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                                        <span
+                                            className="text-wedding-ivory text-xs font-medium"
+                                            style={{ fontFamily: "var(--font-body)" }}
+                                        >
+                                            {currentIndex + 1} / {stories.length}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Text Side */}
+                        <div className="order-2 md:order-2 text-center md:text-left">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={currentIndex}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    {/* Story Title */}
+                                    <motion.h3
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.1, duration: 0.5 }}
+                                        className="text-wedding-charcoal text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6"
+                                        style={{ fontFamily: "var(--font-display)" }}
+                                    >
+                                        {currentStory.title}
+                                    </motion.h3>
+
+                                    {/* Decorative Line */}
+                                    <motion.div
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: 1 }}
+                                        transition={{ delay: 0.2, duration: 0.5 }}
+                                        className="w-20 h-[2px] bg-wedding-gold mx-auto md:mx-0 mb-6 md:mb-8 origin-left"
+                                    />
+
+                                    {/* Story Content */}
+                                    <motion.p
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.3, duration: 0.5 }}
+                                        className="text-wedding-dove text-base md:text-lg lg:text-xl leading-relaxed max-w-lg mx-auto md:mx-0"
+                                        style={{ fontFamily: "var(--font-body)" }}
+                                    >
+                                        {currentStory.content}
+                                    </motion.p>
+
+                                    {/* Heart Icon */}
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: 0.5, duration: 0.3 }}
+                                        className="mt-8 md:mt-10"
+                                    >
+                                        <Heart
+                                            className="text-wedding-gold/60 mx-auto md:mx-0"
+                                            size={24}
+                                            fill="currentColor"
+                                        />
+                                    </motion.div>
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+                    </div>
+
+                    {/* Navigation Arrows - Desktop */}
+                    <div className="hidden md:block">
+                        {/* Previous Button */}
+                        <button
+                            onClick={() => {
+                                goToPrevious();
+                                setIsPlaying(false);
+                            }}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-8 p-3 rounded-full bg-wedding-ivory/80 backdrop-blur-sm border border-wedding-gold/30 text-wedding-charcoal hover:bg-wedding-gold hover:text-wedding-ivory transition-all duration-300 shadow-lg group"
+                            aria-label="Previous story"
+                        >
+                            <ChevronLeft
+                                size={24}
+                                className="transform group-hover:-translate-x-0.5 transition-transform"
+                            />
+                        </button>
+
+                        {/* Next Button */}
+                        <button
+                            onClick={() => {
+                                goToNext();
+                                setIsPlaying(false);
+                            }}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-8 p-3 rounded-full bg-wedding-ivory/80 backdrop-blur-sm border border-wedding-gold/30 text-wedding-charcoal hover:bg-wedding-gold hover:text-wedding-ivory transition-all duration-300 shadow-lg group"
+                            aria-label="Next story"
+                        >
+                            <ChevronRight
+                                size={24}
+                                className="transform group-hover:translate-x-0.5 transition-transform"
+                            />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Pagination & Controls */}
+                <div className="mt-8 md:mt-12 flex flex-col items-center gap-6">
+                    {/* Progress Bar */}
+                    <div className="w-full max-w-md">
+                        <div className="h-1 bg-wedding-champagne/40 rounded-full overflow-hidden">
+                            <motion.div
+                                className="h-full bg-wedding-gold rounded-full"
+                                style={{ width: `${progress}%` }}
+                                transition={{ duration: 0.05 }}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Pagination Dots & Play/Pause */}
+                    <div className="flex items-center gap-6">
+                        {/* Previous - Mobile */}
+                        <button
+                            onClick={() => {
+                                goToPrevious();
+                                setIsPlaying(false);
+                            }}
+                            className="md:hidden p-2 rounded-full text-wedding-charcoal hover:text-wedding-gold transition-colors"
+                            aria-label="Previous story"
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+
+                        {/* Pagination Dots */}
+                        <div className="flex items-center gap-3">
+                            {stories.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => {
+                                        goToStory(index);
+                                        setIsPlaying(false);
+                                    }}
+                                    className={`relative transition-all duration-300 ${index === currentIndex
+                                        ? "w-8 h-3"
+                                        : "w-3 h-3 hover:scale-110"
+                                        }`}
+                                    aria-label={`Go to story ${index + 1}`}
+                                    aria-current={index === currentIndex ? "true" : "false"}
+                                >
+                                    <span
+                                        className={`absolute inset-0 rounded-full transition-all duration-300 ${index === currentIndex
+                                            ? "bg-wedding-gold"
+                                            : "bg-wedding-champagne hover:bg-wedding-gold/60"
+                                            }`}
+                                    />
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Next - Mobile */}
+                        <button
+                            onClick={() => {
+                                goToNext();
+                                setIsPlaying(false);
+                            }}
+                            className="md:hidden p-2 rounded-full text-wedding-charcoal hover:text-wedding-gold transition-colors"
+                            aria-label="Next story"
+                        >
+                            <ChevronRight size={24} />
+                        </button>
+                    </div>
+
+                    {/* Play/Pause Button */}
+                    <button
+                        onClick={togglePlayPause}
+                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-wedding-charcoal/5 hover:bg-wedding-gold/20 border border-wedding-gold/30 transition-all duration-300 group"
+                        aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
                     >
-                        To follow...
-                    </p>
+                        {isPlaying ? (
+                            <>
+                                <Pause
+                                    size={16}
+                                    className="text-wedding-charcoal group-hover:text-wedding-gold transition-colors"
+                                />
+                                <span
+                                    className="text-wedding-charcoal text-xs tracking-wider group-hover:text-wedding-gold transition-colors"
+                                    style={{ fontFamily: "var(--font-body)" }}
+                                >
+                                    PAUSE
+                                </span>
+                            </>
+                        ) : (
+                            <>
+                                <Play
+                                    size={16}
+                                    className="text-wedding-charcoal group-hover:text-wedding-gold transition-colors"
+                                />
+                                <span
+                                    className="text-wedding-charcoal text-xs tracking-wider group-hover:text-wedding-gold transition-colors"
+                                    style={{ fontFamily: "var(--font-body)" }}
+                                >
+                                    PLAY
+                                </span>
+                            </>
+                        )}
+                    </button>
+                </div>
+
+                {/* Swipe Hint - Mobile */}
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="md:hidden text-center text-wedding-dove/60 text-xs mt-6"
+                    style={{ fontFamily: "var(--font-body)" }}
+                >
+                    Use arrows or keyboard to navigate
+                </motion.p>
+            </div>
+
+            {/* Bottom Decorative Element */}
+            <div className="relative z-10 pt-8 pb-16 md:pb-24">
+                <div className="flex justify-center items-center gap-4">
+                    <div className="w-12 h-[1px] bg-wedding-gold/40" />
                     <Heart
-                        className="text-wedding-gold/40 mx-auto mt-8"
-                        size={32}
+                        className="text-wedding-gold/40"
+                        size={16}
                         fill="currentColor"
                     />
-                </motion.div>
+                    <div className="w-12 h-[1px] bg-wedding-gold/40" />
+                </div>
             </div>
         </section>
     );
