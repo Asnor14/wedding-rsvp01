@@ -6,8 +6,7 @@ import { Heart, Utensils, ExternalLink } from "lucide-react";
 export function VenueSection() {
     const images = [
         "/photos/front.jpg",
-        "/photos/venue side0.jpg",
-        "/photos/venue side1.jpg",
+        "/photos/venue side.jpg",
     ];
 
     return (
