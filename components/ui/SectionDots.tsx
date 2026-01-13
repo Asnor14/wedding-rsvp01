@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 const sections = [
     { id: "home", label: "Home" },
     { id: "venue", label: "Venue" },
+    { id: "dress-code", label: "Dress Code" },
     { id: "story", label: "Story" },
     { id: "entourage", label: "Entourage" },
-    { id: "dress-code", label: "Dress Code" },
     { id: "gallery", label: "Gallery" },
     { id: "rsvp", label: "RSVP" },
 ];
@@ -62,8 +62,8 @@ export function SectionDots() {
                     {/* Dot */}
                     <motion.div
                         className={`w-2.5 h-2.5 rounded-full border-2 transition-all duration-300 ${activeSection === section.id
-                                ? "bg-wedding-red border-wedding-red scale-125"
-                                : "bg-transparent border-wedding-red/40 hover:border-wedding-red"
+                            ? "bg-wedding-red border-wedding-red scale-125"
+                            : "bg-transparent border-wedding-red/40 hover:border-wedding-red"
                             }`}
                         animate={{
                             scale: activeSection === section.id ? 1.3 : 1,

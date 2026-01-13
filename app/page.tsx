@@ -41,7 +41,7 @@ function RSVPFallback() {
 
 export default function Home() {
   return (
-    <main className="bg-wedding-charcoal min-h-screen text-wedding-ivory selection:bg-wedding-gold/30">
+    <main className="bg-wedding-charcoal min-h-screen text-wedding-ivory selection:bg-wedding-red/30">
       <Navigation />
       <SectionDots />
       <MusicPlayer />
