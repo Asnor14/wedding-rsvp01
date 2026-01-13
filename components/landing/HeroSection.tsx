@@ -47,7 +47,7 @@ export function HeroSection() {
                         style={{ fontFamily: "var(--font-display)" }}
                     >
                         Godfrey{" "}
-                        <span className="text-wedding-gold inline-block mx-2 md:mx-4">&</span>{" "}
+                        <span className="text-wedding-red inline-block mx-2 md:mx-4">&</span>{" "}
                         Vanesa
                     </motion.h1>
 
@@ -93,7 +93,7 @@ export function HeroSection() {
                         {hashtags.map((tag, index) => (
                             <span
                                 key={index}
-                                className="text-wedding-gold/70 text-[10px] md:text-xs tracking-wide"
+                                className="text-wedding-red/70 text-[10px] md:text-xs tracking-wide"
                                 style={{ fontFamily: "var(--font-body)" }}
                             >
                                 {tag}

@@ -15,7 +15,7 @@ export function Footer() {
                     className="text-wedding-champagne/60 text-3xl md:text-4xl mb-4"
                     style={{ fontFamily: "var(--font-display)" }}
                 >
-                    G <span className="text-wedding-gold">&</span> V
+                    G <span className="text-wedding-red">&</span> V
                 </p>
                 <p
                     className="text-wedding-dove text-xs tracking-[0.2em] uppercase"

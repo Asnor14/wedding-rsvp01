@@ -53,7 +53,7 @@ export function GallerySection() {
                 transition={{ duration: 0.8 }}
             >
                 <p
-                    className="text-wedding-gold text-xs tracking-[0.3em] mb-4"
+                    className="text-wedding-red text-xs tracking-[0.3em] mb-4"
                     style={{ fontFamily: "var(--font-body)" }}
                 >
                     MOMENTS
@@ -65,7 +65,7 @@ export function GallerySection() {
                 >
                     Our Gallery
                 </h2>
-                <div className="w-16 h-[1px] bg-wedding-gold mx-auto" />
+                <div className="w-16 h-[1px] bg-wedding-red mx-auto" />
             </motion.div>
 
             {/* Gallery Carousel */}
@@ -79,7 +79,7 @@ export function GallerySection() {
                 onMouseLeave={handleMouseLeave}
             >
                 {/* Main Image Display */}
-                <div className="relative aspect-[4/3] md:aspect-[16/10] rounded-xl overflow-hidden bg-wedding-cream border border-wedding-gold/20">
+                <div className="relative aspect-[4/3] md:aspect-[16/10] rounded-xl overflow-hidden bg-wedding-cream border border-wedding-red/20">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={currentIndex}
@@ -92,7 +92,7 @@ export function GallerySection() {
                             {galleryImages[currentIndex].isPlaceholder ? (
                                 // Placeholder
                                 <div className="w-full h-full flex flex-col items-center justify-center bg-wedding-cream">
-                                    <ImageIcon className="text-wedding-gold/30 mb-4" size={64} />
+                                    <ImageIcon className="text-wedding-red/30 mb-4" size={64} />
                                     <p
                                         className="text-wedding-dove italic text-lg"
                                         style={{ fontFamily: "var(--font-heading)" }}
@@ -140,8 +140,8 @@ export function GallerySection() {
                             key={index}
                             onClick={() => setCurrentIndex(index)}
                             className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                                ? "bg-wedding-gold w-6"
-                                : "bg-wedding-gold/30 hover:bg-wedding-gold/60"
+                                ? "bg-wedding-red w-6"
+                                : "bg-wedding-red/30 hover:bg-wedding-red/60"
                                 }`}
                             aria-label={`Go to image ${index + 1}`}
                         />
@@ -155,13 +155,13 @@ export function GallerySection() {
                             key={index}
                             onClick={() => setCurrentIndex(index)}
                             className={`flex-shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${index === currentIndex
-                                ? "border-wedding-gold"
+                                ? "border-wedding-red"
                                 : "border-transparent opacity-60 hover:opacity-100"
                                 }`}
                         >
                             {image.isPlaceholder ? (
                                 <div className="w-full h-full bg-wedding-cream flex items-center justify-center">
-                                    <ImageIcon className="text-wedding-gold/30" size={16} />
+                                    <ImageIcon className="text-wedding-red/30" size={16} />
                                 </div>
                             ) : (
                                 <img

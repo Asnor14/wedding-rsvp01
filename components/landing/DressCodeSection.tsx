@@ -21,7 +21,7 @@ export function DressCodeSection() {
 
     return (
         <section id="dress-code" className="py-16 md:py-24 bg-wedding-ivory relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-px bg-wedding-gold/20" />
+            <div className="absolute top-0 left-0 w-full h-px bg-wedding-red/20" />
 
             <div className="max-w-4xl mx-auto px-6 text-center">
                 <motion.div
@@ -37,7 +37,7 @@ export function DressCodeSection() {
                     {/* Two Columns: Guests | Principal Sponsors */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         {/* Guests Section */}
-                        <div className="bg-white/50 rounded-xl p-6 border border-wedding-gold/10">
+                        <div className="bg-white/50 rounded-xl p-6 border border-wedding-red/10">
                             <h3 className="text-lg md:text-xl text-wedding-charcoal mb-4 font-semibold" style={{ fontFamily: "var(--font-heading)" }}>
                                 Guests
                             </h3>
@@ -55,7 +55,7 @@ export function DressCodeSection() {
                                 </div>
 
                                 {/* Guest Palette */}
-                                <div className="flex flex-wrap gap-1 border border-wedding-gold/20 rounded-md overflow-hidden bg-white/30 p-1">
+                                <div className="flex flex-wrap gap-1 border border-wedding-red/20 rounded-md overflow-hidden bg-white/30 p-1">
                                     {guestPalette.map((color, i) => (
                                         <div
                                             key={i}
@@ -69,7 +69,7 @@ export function DressCodeSection() {
                         </div>
 
                         {/* Principal Sponsors Section */}
-                        <div className="bg-white/50 rounded-xl p-6 border border-wedding-gold/10">
+                        <div className="bg-white/50 rounded-xl p-6 border border-wedding-red/10">
                             <h3 className="text-lg md:text-xl text-wedding-charcoal mb-4 font-semibold" style={{ fontFamily: "var(--font-heading)" }}>
                                 Principal Sponsors
                             </h3>
@@ -87,7 +87,7 @@ export function DressCodeSection() {
                                 </span>
 
                                 {/* Sponsor Palette */}
-                                <div className="flex gap-1 border border-wedding-gold/20 rounded-md overflow-hidden bg-white/30 p-1 max-w-[100px]">
+                                <div className="flex gap-1 border border-wedding-red/20 rounded-md overflow-hidden bg-white/30 p-1 max-w-[100px]">
                                     {sponsorPalette.map((color, i) => (
                                         <div
                                             key={i}
@@ -101,7 +101,7 @@ export function DressCodeSection() {
                         </div>
                     </div>
 
-                    <div className="mt-12 md:mt-16 p-5 md:p-6 bg-wedding-cream/50 rounded-lg border border-wedding-gold/10 inline-block max-w-md">
+                    <div className="mt-12 md:mt-16 p-5 md:p-6 bg-wedding-cream/50 rounded-lg border border-wedding-red/10 inline-block max-w-md">
                         <p className="text-wedding-slate text-xs md:text-sm italic leading-relaxed" style={{ fontFamily: "var(--font-heading)" }}>
                             "We kindly ask our guests to strictly follow the dress code."
                         </p>

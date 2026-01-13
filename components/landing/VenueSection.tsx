@@ -69,20 +69,20 @@ export function VenueSection() {
                             >
                                 The Venue
                             </h2>
-                            <div className="w-16 h-[2px] bg-wedding-gold mx-auto lg:mx-0" />
+                            <div className="w-16 h-[2px] bg-wedding-red mx-auto lg:mx-0" />
                         </div>
 
                         {/* Venue Details - Two Columns (Ceremony | Reception) */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {/* Ceremony */}
-                            <div className="bg-white/50 rounded-xl p-5 border border-wedding-gold/10">
+                            <div className="bg-white/50 rounded-xl p-5 border border-wedding-red/10">
                                 <div className="flex items-center gap-2 mb-3">
-                                    <Heart className="text-wedding-gold" size={20} />
+                                    <Heart className="text-wedding-red" size={20} />
                                     <h3 className="text-lg md:text-xl text-wedding-charcoal" style={{ fontFamily: "var(--font-heading)" }}>
                                         Ceremony
                                     </h3>
                                 </div>
-                                <p className="text-wedding-gold font-semibold mb-2 tracking-widest text-xs">3:00 PM</p>
+                                <p className="text-wedding-red font-semibold mb-2 tracking-widest text-xs">3:00 PM</p>
                                 <p className="text-wedding-charcoal text-sm md:text-base font-medium mb-1" style={{ fontFamily: "var(--font-heading)" }}>
                                     San Lorenzo Ruiz Parish Church
                                 </p>
@@ -93,7 +93,7 @@ export function VenueSection() {
                                     href="https://www.google.com/maps/search/?api=1&query=San+Lorenzo+Ruiz+Parish+Church+San+Vicente+Tarlac+City"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 bg-wedding-gold text-wedding-ivory px-3 py-2 rounded-md text-[10px] tracking-[0.1em] uppercase hover:bg-wedding-antique transition-colors shadow-md font-medium"
+                                    className="inline-flex items-center gap-2 bg-wedding-red text-wedding-ivory px-3 py-2 rounded-md text-[10px] tracking-[0.1em] uppercase hover:bg-wedding-darkred transition-colors shadow-md font-medium"
                                     style={{ fontFamily: "var(--font-body)" }}
                                 >
                                     View Map <ExternalLink size={10} />
@@ -101,14 +101,14 @@ export function VenueSection() {
                             </div>
 
                             {/* Reception */}
-                            <div className="bg-white/50 rounded-xl p-5 border border-wedding-gold/10">
+                            <div className="bg-white/50 rounded-xl p-5 border border-wedding-red/10">
                                 <div className="flex items-center gap-2 mb-3">
-                                    <Utensils className="text-wedding-gold" size={20} />
+                                    <Utensils className="text-wedding-red" size={20} />
                                     <h3 className="text-lg md:text-xl text-wedding-charcoal" style={{ fontFamily: "var(--font-heading)" }}>
                                         Reception
                                     </h3>
                                 </div>
-                                <p className="text-wedding-gold font-semibold mb-2 tracking-widest text-xs">5:00 PM</p>
+                                <p className="text-wedding-red font-semibold mb-2 tracking-widest text-xs">5:00 PM</p>
                                 <p className="text-wedding-charcoal text-sm md:text-base font-medium mb-1" style={{ fontFamily: "var(--font-heading)" }}>
                                     The Bella Plaza
                                 </p>
@@ -119,7 +119,7 @@ export function VenueSection() {
                                     href="https://www.google.com/maps/search/?api=1&query=The+Bella+Plaza+San+Sebastian+Village+Tarlac+City"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 bg-wedding-gold text-wedding-ivory px-3 py-2 rounded-md text-[10px] tracking-[0.1em] uppercase hover:bg-wedding-antique transition-colors shadow-md font-medium"
+                                    className="inline-flex items-center gap-2 bg-wedding-red text-wedding-ivory px-3 py-2 rounded-md text-[10px] tracking-[0.1em] uppercase hover:bg-wedding-darkred transition-colors shadow-md font-medium"
                                     style={{ fontFamily: "var(--font-body)" }}
                                 >
                                     View Map <ExternalLink size={10} />

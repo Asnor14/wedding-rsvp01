@@ -39,7 +39,7 @@ export function ConfirmationModal({ isOpen, onClose, formData, showConfetti }: C
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
                             transition={{ duration: 0.3 }}
-                            className="bg-wedding-cream border border-wedding-gold/30 rounded-xl p-8 md:p-12 max-w-lg w-full max-h-[90vh] overflow-y-auto"
+                            className="bg-wedding-cream border border-wedding-red/30 rounded-xl p-8 md:p-12 max-w-lg w-full max-h-[90vh] overflow-y-auto"
                             onClick={(e) => e.stopPropagation()}
                         >
                             {/* Header */}
@@ -50,7 +50,7 @@ export function ConfirmationModal({ isOpen, onClose, formData, showConfetti }: C
                                     transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
                                 >
                                     <Heart
-                                        className={`mx-auto mb-4 ${isAttending ? "text-wedding-gold" : "text-wedding-dove"}`}
+                                        className={`mx-auto mb-4 ${isAttending ? "text-wedding-red" : "text-wedding-dove"}`}
                                         size={48}
                                         fill="currentColor"
                                     />
@@ -75,14 +75,14 @@ export function ConfirmationModal({ isOpen, onClose, formData, showConfetti }: C
                             {isAttending && (
                                 <div className="bg-wedding-pearl/50 rounded-lg p-6 mb-6">
                                     <h4
-                                        className="text-wedding-gold text-xs tracking-[0.2em] uppercase mb-4"
+                                        className="text-wedding-red text-xs tracking-[0.2em] uppercase mb-4"
                                         style={{ fontFamily: "var(--font-body)" }}
                                     >
                                         Event Details
                                     </h4>
                                     <div className="space-y-3">
                                         <div className="flex items-start gap-3">
-                                            <MapPin className="text-wedding-gold mt-0.5 flex-shrink-0" size={16} />
+                                            <MapPin className="text-wedding-red mt-0.5 flex-shrink-0" size={16} />
                                             <div>
                                                 <p className="text-wedding-charcoal text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
                                                     San Lorenzo Ruiz Parish Church
@@ -93,7 +93,7 @@ export function ConfirmationModal({ isOpen, onClose, formData, showConfetti }: C
                                             </div>
                                         </div>
                                         <div className="flex items-start gap-3">
-                                            <Clock className="text-wedding-gold mt-0.5 flex-shrink-0" size={16} />
+                                            <Clock className="text-wedding-red mt-0.5 flex-shrink-0" size={16} />
                                             <div>
                                                 <p className="text-wedding-charcoal text-sm font-medium" style={{ fontFamily: "var(--font-body)" }}>
                                                     February 14, 2026
@@ -110,7 +110,7 @@ export function ConfirmationModal({ isOpen, onClose, formData, showConfetti }: C
                             {/* RSVP Summary */}
                             <div className="bg-wedding-pearl/50 rounded-lg p-6 mb-8">
                                 <h4
-                                    className="text-wedding-gold text-xs tracking-[0.2em] uppercase mb-4"
+                                    className="text-wedding-red text-xs tracking-[0.2em] uppercase mb-4"
                                     style={{ fontFamily: "var(--font-body)" }}
                                 >
                                     Your RSVP
@@ -148,7 +148,7 @@ export function ConfirmationModal({ isOpen, onClose, formData, showConfetti }: C
                             {/* Close Button */}
                             <button
                                 onClick={onClose}
-                                className="w-full bg-wedding-gold text-wedding-charcoal py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-wedding-antique transition-all duration-300 rounded-lg"
+                                className="w-full bg-wedding-red text-wedding-charcoal py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-wedding-darkred transition-all duration-300 rounded-lg"
                                 style={{ fontFamily: "var(--font-body)" }}
                             >
                                 Close

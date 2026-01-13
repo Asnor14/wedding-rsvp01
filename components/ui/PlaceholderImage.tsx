@@ -25,7 +25,7 @@ export function PlaceholderImage({ className = "", label = "Image", variant = "g
     return (
         <div className={`bg-gradient-to-br ${gradients[variant]} flex items-center justify-center ${className}`}>
             <div className="text-center opacity-50">
-                <Camera className="mx-auto mb-2 text-wedding-gold" size={32} />
+                <Camera className="mx-auto mb-2 text-wedding-red" size={32} />
                 <p className="text-xs tracking-widest uppercase text-wedding-dove" style={{ fontFamily: "var(--font-body)" }}>
                     {label}
                 </p>

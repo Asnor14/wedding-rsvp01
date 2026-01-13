@@ -44,11 +44,11 @@ export function Navigation() {
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className={`text-xs tracking-[0.3em] uppercase transition-all duration-300 hover:text-wedding-gold relative group ${isScrolled ? "text-wedding-charcoal" : "text-wedding-ivory"
+                                    className={`text-xs tracking-[0.3em] uppercase transition-all duration-300 hover:text-wedding-red relative group ${isScrolled ? "text-wedding-charcoal" : "text-wedding-ivory"
                                         }`}
                                 >
                                     {link.name}
-                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-wedding-gold transition-all duration-300 group-hover:w-full group-hover:left-0" />
+                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-wedding-red transition-all duration-300 group-hover:w-full group-hover:left-0" />
                                 </a>
                             ))}
                         </div>
@@ -60,7 +60,7 @@ export function Navigation() {
                                 }`}
                             style={{ fontFamily: "var(--font-display)" }}
                         >
-                            G <span className="text-wedding-gold">&</span> V
+                            G <span className="text-wedding-red">&</span> V
                         </a>
 
                         {/* Desktop Right Links */}
@@ -69,11 +69,11 @@ export function Navigation() {
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className={`text-xs tracking-[0.3em] uppercase transition-all duration-300 hover:text-wedding-gold relative group ${isScrolled ? "text-wedding-charcoal" : "text-wedding-ivory"
+                                    className={`text-xs tracking-[0.3em] uppercase transition-all duration-300 hover:text-wedding-red relative group ${isScrolled ? "text-wedding-charcoal" : "text-wedding-ivory"
                                         }`}
                                 >
                                     {link.name}
-                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-wedding-gold transition-all duration-300 group-hover:w-full group-hover:left-0" />
+                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[1px] bg-wedding-red transition-all duration-300 group-hover:w-full group-hover:left-0" />
                                 </a>
                             ))}
                         </div>
@@ -102,7 +102,7 @@ export function Navigation() {
                     >
                         <button
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="absolute top-6 right-6 text-wedding-ivory p-2 hover:text-wedding-gold transition-colors"
+                            className="absolute top-6 right-6 text-wedding-ivory p-2 hover:text-wedding-red transition-colors"
                             aria-label="Close menu"
                         >
                             <X size={32} />
@@ -117,7 +117,7 @@ export function Navigation() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1, duration: 0.4 }}
-                                    className="text-wedding-ivory text-3xl tracking-widest hover:text-wedding-gold transition-colors"
+                                    className="text-wedding-ivory text-3xl tracking-widest hover:text-wedding-red transition-colors"
                                     style={{ fontFamily: "var(--font-heading)" }}
                                 >
                                     {link.name}

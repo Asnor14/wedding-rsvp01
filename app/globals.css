@@ -73,12 +73,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-wedding-gold);
+  background: var(--color-wedding-red);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-wedding-antique);
+  background: var(--color-wedding-darkred);
 }
 
 /* Modal scrollbar - hidden but still scrollable */

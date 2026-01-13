@@ -62,8 +62,8 @@ export function SectionDots() {
                     {/* Dot */}
                     <motion.div
                         className={`w-2.5 h-2.5 rounded-full border-2 transition-all duration-300 ${activeSection === section.id
-                                ? "bg-wedding-gold border-wedding-gold scale-125"
-                                : "bg-transparent border-wedding-gold/40 hover:border-wedding-gold"
+                                ? "bg-wedding-red border-wedding-red scale-125"
+                                : "bg-transparent border-wedding-red/40 hover:border-wedding-red"
                             }`}
                         animate={{
                             scale: activeSection === section.id ? 1.3 : 1,
