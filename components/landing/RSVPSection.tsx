@@ -19,6 +19,7 @@ export function RSVPSection() {
         attending: "",
         message: "",
     });
+    const [additionalGuests, setAdditionalGuests] = useState<string[]>([]);
     const [showFormModal, setShowFormModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
@@ -106,6 +107,7 @@ export function RSVPSection() {
             data.append("guestCount", formData.guests);
             data.append("attending", formData.attending);
             data.append("message", formData.message);
+            data.append("additionalGuests", JSON.stringify(additionalGuests));
             data.append("invitationId", invitationId || "");
 
             const result = await submitRSVP(data);
@@ -125,6 +127,27 @@ export function RSVPSection() {
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleGuestsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const count = parseInt(e.target.value);
+        setFormData({ ...formData, guests: e.target.value });
+
+        // Adjust additional guests array (count - 1 slots needed)
+        const needed = Math.max(0, count - 1);
+        setAdditionalGuests(prev => {
+            if (prev.length < needed) {
+                return [...prev, ...Array(needed - prev.length).fill("")];
+            } else {
+                return prev.slice(0, needed);
+            }
+        });
+    };
+
+    const handleGuestNameChange = (index: number, value: string) => {
+        const newNames = [...additionalGuests];
+        newNames[index] = value;
+        setAdditionalGuests(newNames);
     };
 
     // Generate guest options dynamically based on maxGuests
@@ -249,7 +272,7 @@ export function RSVPSection() {
                                         </label>
                                         <select
                                             value={formData.guests}
-                                            onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
+                                            onChange={handleGuestsChange}
                                             className="w-full bg-transparent border-b-2 border-wedding-champagne/40 text-wedding-ivory py-3 focus:border-wedding-red focus:outline-none transition-all duration-300 cursor-pointer"
                                             style={{ fontFamily: "var(--font-body)" }}
                                             disabled={isLoadingInvitation}
@@ -263,6 +286,31 @@ export function RSVPSection() {
                                             ))}
                                         </select>
                                     </div>
+
+                                    {/* Additional Guests Inputs */}
+                                    {parseInt(formData.guests) > 1 && (
+                                        <div className="space-y-4 pl-4 border-l-2 border-wedding-red/20 ml-1 animate-in fade-in slide-in-from-top-2 duration-300">
+                                            {additionalGuests.map((name, index) => (
+                                                <div key={index}>
+                                                    <label
+                                                        className="block text-wedding-red/70 text-[10px] tracking-[0.2em] uppercase mb-1"
+                                                        style={{ fontFamily: "var(--font-body)" }}
+                                                    >
+                                                        Guest {index + 2} Name <span className="text-wedding-red">*</span>
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        required={formData.attending === 'yes'}
+                                                        value={name}
+                                                        onChange={(e) => handleGuestNameChange(index, e.target.value)}
+                                                        placeholder={`Full Name of Guest ${index + 2}`}
+                                                        className="w-full bg-transparent border-b border-wedding-champagne/20 text-wedding-ivory py-2 text-sm focus:border-wedding-red focus:outline-none transition-all duration-300 placeholder:text-wedding-champagne/30"
+                                                        style={{ fontFamily: "var(--font-body)" }}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
 
                                     {/* Attendance - Radio Buttons */}
                                     <div>
@@ -496,8 +544,8 @@ export function RSVPSection() {
                                         <div className="flex justify-between items-center text-sm">
                                             <span className="text-wedding-champagne/60">Status:</span>
                                             <span className={`font-bold px-2 py-1 rounded text-xs uppercase tracking-wider ${statusResult.attending
-                                                    ? "bg-green-500/20 text-green-400"
-                                                    : "bg-red-500/20 text-red-400"
+                                                ? "bg-green-500/20 text-green-400"
+                                                : "bg-red-500/20 text-red-400"
                                                 }`}>
                                                 {statusResult.attending ? "Confirmed" : "Declined"}
                                             </span>

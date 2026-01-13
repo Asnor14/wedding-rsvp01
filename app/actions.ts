@@ -153,6 +153,17 @@ export async function submitRSVP(formData: FormData): Promise<SubmitRSVPResult> 
             };
         }
 
+        // Parse additional guests
+        const additionalGuestsRaw = formData.get("additionalGuests");
+        let additionalGuests: string[] = [];
+        if (additionalGuestsRaw) {
+            try {
+                additionalGuests = JSON.parse(additionalGuestsRaw as string);
+            } catch (e) {
+                console.error("Failed to parse additional guests", e);
+            }
+        }
+
         // Step B: Insert into Supabase
         const guestData: Record<string, unknown> = {
             name: fullName.trim(),
@@ -160,6 +171,7 @@ export async function submitRSVP(formData: FormData): Promise<SubmitRSVPResult> 
             guest_count: guestCount,
             attending,
             message: message?.trim() || null,
+            additional_guests: additionalGuests, // Matches the new JSONB column
         };
 
         // Include invitation_id if provided
