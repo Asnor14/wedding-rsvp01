@@ -28,7 +28,7 @@ const stories: Story[] = [
         date: "2019",
         content:
             "We met at work, in the most ordinary way. Godfrey fell in love with Vanesa right away; Vanesa took a little longer. Three months of papansin Messenger chats followed—most of them unanswered—until one question finally landed: \"Hi Nes... Galing Mindoro yan. Kumakain ka niyan?\"",
-        images: ["/photos/1.jpg"],
+        images: ["/photos/1.png", "/photos/2.png"],
     },
     {
         id: 2,
@@ -36,7 +36,7 @@ const stories: Story[] = [
         date: "2019 - 2020",
         content:
             "Godfrey never gave up. Every smile, every small moment became an opportunity to show his intentions. What started as casual conversations slowly turned into something more meaningful. Vanesa began to see the sincerity behind every gesture.",
-        images: ["/photos/2.png"],
+        images: ["/photos/3.png", "/photos/4.png"],
     },
     {
         id: 3,
@@ -44,7 +44,7 @@ const stories: Story[] = [
         date: "2020 - 2021",
         content:
             "Time revealed what the heart already knew. Through late night talks, shared dreams, and countless adventures together, love blossomed naturally. Every day brought them closer, and what once was uncertainty became beautiful certainty.",
-        images: ["/photos/3.1.jpg", "/photos/3.2.jfif", "/photos/3.3.png"],
+        images: ["/photos/5.png", "/photos/6.png"],
     },
     {
         id: 4,
@@ -52,7 +52,7 @@ const stories: Story[] = [
         date: "2022 - 2024",
         content:
             "Together through every storm and every sunshine, they built a bond unshakeable. From simple dates to life's biggest decisions, they proved that true love grows stronger with time. Every challenge became a stepping stone to forever.",
-        images: ["/photos/4.1.jpg", "/photos/4.2.jfif", "/photos/4.3.jpg", "/photos/4.4.jpg"],
+        images: ["/photos/7.png", "/photos/8.png"],
     },
     {
         id: 5,
@@ -60,7 +60,7 @@ const stories: Story[] = [
         date: "February 14, 2026",
         content:
             "And now, we stand at the beginning of our greatest adventure yet. With hearts full of love and dreams of tomorrow, we invite you to witness the start of our forever. This isn't just a wedding—it's the celebration of a love story years in the making.",
-        images: ["/photos/5.jpeg"],
+        images: ["/photos/9.png", "/photos/10.png"],
     },
 ];
 
@@ -346,39 +346,6 @@ export function StorySection() {
                             </AnimatePresence>
                         </div>
                     </div>
-
-                    {/* Navigation Arrows - Desktop */}
-                    <div className="hidden md:block">
-                        {/* Previous Button */}
-                        <button
-                            onClick={() => {
-                                goToPrevious();
-                                setIsPlaying(false);
-                            }}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-8 p-3 rounded-full bg-wedding-ivory/80 backdrop-blur-sm border border-wedding-gold/30 text-wedding-charcoal hover:bg-wedding-gold hover:text-wedding-ivory transition-all duration-300 shadow-lg group"
-                            aria-label="Previous story"
-                        >
-                            <ChevronLeft
-                                size={24}
-                                className="transform group-hover:-translate-x-0.5 transition-transform"
-                            />
-                        </button>
-
-                        {/* Next Button */}
-                        <button
-                            onClick={() => {
-                                goToNext();
-                                setIsPlaying(false);
-                            }}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-8 p-3 rounded-full bg-wedding-ivory/80 backdrop-blur-sm border border-wedding-gold/30 text-wedding-charcoal hover:bg-wedding-gold hover:text-wedding-ivory transition-all duration-300 shadow-lg group"
-                            aria-label="Next story"
-                        >
-                            <ChevronRight
-                                size={24}
-                                className="transform group-hover:translate-x-0.5 transition-transform"
-                            />
-                        </button>
-                    </div>
                 </div>
 
                 {/* Pagination & Controls */}
@@ -394,105 +361,86 @@ export function StorySection() {
                         </div>
                     </div>
 
-                    {/* Pagination Dots & Play/Pause */}
-                    <div className="flex items-center gap-6">
-                        {/* Previous - Mobile */}
+                    {/* Video Player Style Controls */}
+                    <div className="flex items-center justify-center gap-2">
+                        {/* Previous Button */}
                         <button
                             onClick={() => {
                                 goToPrevious();
                                 setIsPlaying(false);
                             }}
-                            className="md:hidden p-2 rounded-full text-wedding-charcoal hover:text-wedding-gold transition-colors"
+                            className="p-3 rounded-full bg-wedding-charcoal/5 hover:bg-wedding-gold/20 border border-wedding-gold/30 text-wedding-charcoal hover:text-wedding-gold transition-all duration-300 group"
                             aria-label="Previous story"
                         >
-                            <ChevronLeft size={24} />
+                            <ChevronLeft
+                                size={20}
+                                className="transform group-hover:-translate-x-0.5 transition-transform"
+                            />
                         </button>
 
-                        {/* Pagination Dots */}
-                        <div className="flex items-center gap-3">
-                            {stories.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => {
-                                        goToStory(index);
-                                        setIsPlaying(false);
-                                    }}
-                                    className={`relative transition-all duration-300 ${index === currentIndex
-                                        ? "w-8 h-3"
-                                        : "w-3 h-3 hover:scale-110"
-                                        }`}
-                                    aria-label={`Go to story ${index + 1}`}
-                                    aria-current={index === currentIndex ? "true" : "false"}
-                                >
-                                    <span
-                                        className={`absolute inset-0 rounded-full transition-all duration-300 ${index === currentIndex
-                                            ? "bg-wedding-gold"
-                                            : "bg-wedding-champagne hover:bg-wedding-gold/60"
-                                            }`}
-                                    />
-                                </button>
-                            ))}
-                        </div>
+                        {/* Play/Pause Button - Center & Larger */}
+                        <button
+                            onClick={togglePlayPause}
+                            className="p-4 rounded-full bg-wedding-gold hover:bg-wedding-antique text-wedding-charcoal transition-all duration-300 shadow-lg group"
+                            aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
+                        >
+                            {isPlaying ? (
+                                <Pause size={24} />
+                            ) : (
+                                <Play size={24} className="ml-0.5" />
+                            )}
+                        </button>
 
-                        {/* Next - Mobile */}
+                        {/* Next Button */}
                         <button
                             onClick={() => {
                                 goToNext();
                                 setIsPlaying(false);
                             }}
-                            className="md:hidden p-2 rounded-full text-wedding-charcoal hover:text-wedding-gold transition-colors"
+                            className="p-3 rounded-full bg-wedding-charcoal/5 hover:bg-wedding-gold/20 border border-wedding-gold/30 text-wedding-charcoal hover:text-wedding-gold transition-all duration-300 group"
                             aria-label="Next story"
                         >
-                            <ChevronRight size={24} />
+                            <ChevronRight
+                                size={20}
+                                className="transform group-hover:translate-x-0.5 transition-transform"
+                            />
                         </button>
                     </div>
 
-                    {/* Play/Pause Button */}
-                    <button
-                        onClick={togglePlayPause}
-                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-wedding-charcoal/5 hover:bg-wedding-gold/20 border border-wedding-gold/30 transition-all duration-300 group"
-                        aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-                    >
-                        {isPlaying ? (
-                            <>
-                                <Pause
-                                    size={16}
-                                    className="text-wedding-charcoal group-hover:text-wedding-gold transition-colors"
-                                />
+                    {/* Pagination Dots */}
+                    <div className="flex items-center gap-3">
+                        {stories.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => {
+                                    goToStory(index);
+                                    setIsPlaying(false);
+                                }}
+                                className={`relative transition-all duration-300 ${index === currentIndex
+                                    ? "w-8 h-3"
+                                    : "w-3 h-3 hover:scale-110"
+                                    }`}
+                                aria-label={`Go to story ${index + 1}`}
+                                aria-current={index === currentIndex ? "true" : "false"}
+                            >
                                 <span
-                                    className="text-wedding-charcoal text-xs tracking-wider group-hover:text-wedding-gold transition-colors"
-                                    style={{ fontFamily: "var(--font-body)" }}
-                                >
-                                    PAUSE
-                                </span>
-                            </>
-                        ) : (
-                            <>
-                                <Play
-                                    size={16}
-                                    className="text-wedding-charcoal group-hover:text-wedding-gold transition-colors"
+                                    className={`absolute inset-0 rounded-full transition-all duration-300 ${index === currentIndex
+                                        ? "bg-wedding-gold"
+                                        : "bg-wedding-champagne hover:bg-wedding-gold/60"
+                                        }`}
                                 />
-                                <span
-                                    className="text-wedding-charcoal text-xs tracking-wider group-hover:text-wedding-gold transition-colors"
-                                    style={{ fontFamily: "var(--font-body)" }}
-                                >
-                                    PLAY
-                                </span>
-                            </>
-                        )}
-                    </button>
-                </div>
+                            </button>
+                        ))}
+                    </div>
 
-                {/* Swipe Hint - Mobile */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    className="md:hidden text-center text-wedding-dove/60 text-xs mt-6"
-                    style={{ fontFamily: "var(--font-body)" }}
-                >
-                    Use arrows or keyboard to navigate
-                </motion.p>
+                    {/* Keyboard Hint */}
+                    <p
+                        className="text-wedding-dove/50 text-xs"
+                        style={{ fontFamily: "var(--font-body)" }}
+                    >
+                        Press Space to {isPlaying ? "pause" : "play"} • Arrow keys to navigate
+                    </p>
+                </div>
             </div>
 
             {/* Bottom Decorative Element */}
