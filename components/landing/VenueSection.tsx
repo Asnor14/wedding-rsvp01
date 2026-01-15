@@ -8,7 +8,7 @@ export function VenueSection() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const images = [
-        "/photos/venue side.jpg",
+        "/photos/CHURCH 2.jpg",
         "/photos/front.jpg",
 
     ];
