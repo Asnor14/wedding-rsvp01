@@ -125,6 +125,8 @@ export function RSVPSection() {
                 }
                 setShowFormModal(false);
                 setShowConfirmModal(true);
+                // Immediately lock the UI
+                setIsInvitationUsed(true);
             } else {
                 setError(result.message);
             }
@@ -624,8 +626,8 @@ export function RSVPSection() {
                             onClick={() => !isInvitationUsed && setShowFormModal(true)}
                             disabled={isInvitationUsed}
                             className={`relative bg-wedding-red text-wedding-charcoal px-12 md:px-16 py-4 md:py-5 text-sm md:text-base tracking-[0.2em] uppercase font-bold rounded-lg shadow-xl transition-all flex items-center gap-3 mx-auto ${isInvitationUsed
-                                    ? "opacity-50 cursor-not-allowed grayscale"
-                                    : "hover:bg-wedding-darkred"
+                                ? "opacity-50 cursor-not-allowed grayscale"
+                                : "hover:bg-wedding-darkred"
                                 }`}
                             style={{ fontFamily: "var(--font-body)" }}
                             whileHover={!isInvitationUsed ? { scale: 1.05 } : {}}

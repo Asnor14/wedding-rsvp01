@@ -176,10 +176,9 @@ export async function submitRSVP(formData: FormData): Promise<SubmitRSVPResult> 
             guest_count: guestCount,
             attending,
             message: message?.trim() || null,
-            additional_guests: additionalGuests, // Matches the new JSONB column
+            additional_guests: additionalGuests,
         };
 
-        // Include invitation_id if provided
         if (invitationId && invitationId.trim()) {
             guestData.invitation_id = invitationId.trim();
         }
@@ -196,6 +195,7 @@ export async function submitRSVP(formData: FormData): Promise<SubmitRSVPResult> 
 
         // Step B.2: Lock the invitation if successful
         if (invitationId && invitationId.trim()) {
+            console.log("Locking invitation:", invitationId);
             const { error: updateError } = await supabase
                 .from("invitations")
                 .update({ status: "responded" })
@@ -225,9 +225,7 @@ export async function submitRSVP(formData: FormData): Promise<SubmitRSVPResult> 
                 html: emailHtml,
             });
         } catch (emailError) {
-            // Log email error but don't fail the RSVP submission
             console.error("Email Error:", emailError);
-            // The RSVP was still saved successfully
         }
 
         // Step D: Return success
