@@ -15,7 +15,7 @@ export function VenueSection() {
                 {/* Side-by-side layout: Images Left, Content Right */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 
-                    {/* Left Side - Image Gallery Grid */}
+                    {/* Left Side - Image Gallery Grid (2 images only) */}
                     <motion.div
                         className="grid grid-cols-2 gap-3"
                         initial={{ opacity: 0, x: -30 }}
@@ -23,30 +23,21 @@ export function VenueSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Large Image - spans 2 rows */}
-                        <div className="row-span-2 rounded-xl overflow-hidden shadow-lg">
+                        {/* Left Image */}
+                        <div className="rounded-xl overflow-hidden shadow-lg">
                             <img
                                 src={images[0]}
                                 alt="Main Venue"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover aspect-[3/4]"
                             />
                         </div>
 
-                        {/* Top Right Image */}
+                        {/* Right Image */}
                         <div className="rounded-xl overflow-hidden shadow-lg">
                             <img
                                 src={images[1]}
-                                alt="Venue Detail 1"
-                                className="w-full h-full object-cover aspect-[4/3]"
-                            />
-                        </div>
-
-                        {/* Bottom Right Image */}
-                        <div className="rounded-xl overflow-hidden shadow-lg">
-                            <img
-                                src={images[2]}
-                                alt="Venue Detail 2"
-                                className="w-full h-full object-cover aspect-[4/3]"
+                                alt="Venue Detail"
+                                className="w-full h-full object-cover aspect-[3/4]"
                             />
                         </div>
                     </motion.div>

@@ -5,18 +5,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ImageIcon } from "lucide-react";
 
 export function GallerySection() {
-    // Gallery images - 2 real + 8 placeholders = 10 total
+    // Gallery images - all 17 images from gallery folder
     const galleryImages = [
-        { src: "/photos/gallery1.png", isPlaceholder: false },
-        { src: "/photos/gallery2.jpg", isPlaceholder: false },
-        { src: null, isPlaceholder: true },
-        { src: null, isPlaceholder: true },
-        { src: null, isPlaceholder: true },
-        { src: null, isPlaceholder: true },
-        { src: null, isPlaceholder: true },
-        { src: null, isPlaceholder: true },
-        { src: null, isPlaceholder: true },
-        { src: null, isPlaceholder: true },
+        { src: "/photos/gallery/1.png", isPlaceholder: false },
+        { src: "/photos/gallery/2.png", isPlaceholder: false },
+        { src: "/photos/gallery/3.png", isPlaceholder: false },
+        { src: "/photos/gallery/4.png", isPlaceholder: false },
+        { src: "/photos/gallery/5.png", isPlaceholder: false },
+        { src: "/photos/gallery/6.png", isPlaceholder: false },
+        { src: "/photos/gallery/7.png", isPlaceholder: false },
+        { src: "/photos/gallery/8.png", isPlaceholder: false },
+        { src: "/photos/gallery/9.png", isPlaceholder: false },
+        { src: "/photos/gallery/10.png", isPlaceholder: false },
+        { src: "/photos/gallery/11.png", isPlaceholder: false },
+        { src: "/photos/gallery/12.png", isPlaceholder: false },
+        { src: "/photos/gallery/13.png", isPlaceholder: false },
+        { src: "/photos/gallery/14.png", isPlaceholder: false },
+        { src: "/photos/gallery/15.png", isPlaceholder: false },
+        { src: "/photos/gallery/16.png", isPlaceholder: false },
+        { src: "/photos/gallery/17.png", isPlaceholder: false },
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
