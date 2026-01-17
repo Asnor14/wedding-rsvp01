@@ -713,7 +713,7 @@ export function RSVPSection() {
 
                     {/* Gift Message */}
                     <motion.p
-                        className="text-wedding-champagne/50 text-xs mt-10 max-w-sm mx-auto italic leading-relaxed"
+                        className="text-wedding-champagne/50 text-s mt-10 max-w-sm mx-auto italic leading-relaxed"
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
