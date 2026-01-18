@@ -325,14 +325,32 @@ export function RSVPSection() {
                                     </p>
                                     {/* Seat allocation notification */}
                                     {invitationId && maxGuests > 0 && (
-                                        <div className="mt-3 px-4 py-2 bg-wedding-red/10 border border-wedding-red/30 rounded-lg inline-block">
+                                        <motion.div
+                                            className="mt-4 px-6 py-3 bg-wedding-red/10 border border-wedding-red/30 rounded-lg inline-flex items-center gap-3"
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.2 }}
+                                        >
+                                            <motion.span
+                                                animate={{
+                                                    scale: [1, 1.2, 1, 1.1, 1],
+                                                }}
+                                                transition={{
+                                                    duration: 1.5,
+                                                    repeat: Infinity,
+                                                    repeatDelay: 1,
+                                                }}
+                                                className="text-xl"
+                                            >
+                                                ❤️
+                                            </motion.span>
                                             <p
-                                                className="text-wedding-champagne text-xs"
+                                                className="text-wedding-champagne text-sm md:text-base"
                                                 style={{ fontFamily: "var(--font-body)" }}
                                             >
-                                                🎟️ We have allotted <span className="text-wedding-red font-semibold">{maxGuests} {maxGuests === 1 ? 'seat' : 'seats'}</span> for you
+                                                We have allotted <span className="text-wedding-red font-bold text-base md:text-lg">{maxGuests} {maxGuests === 1 ? 'seat' : 'seats'}</span> for you
                                             </p>
-                                        </div>
+                                        </motion.div>
                                     )}
                                     {/* Loading invitation indicator */}
                                     {isLoadingInvitation && (
