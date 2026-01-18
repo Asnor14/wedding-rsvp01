@@ -179,7 +179,29 @@ export async function submitRSVP(formData: FormData): Promise<SubmitRSVPResult> 
             additional_guests: additionalGuests,
         };
 
+        // Step B.1: If invitation ID exists, verify it hasn't been used (server-side check)
         if (invitationId && invitationId.trim()) {
+            const { data: invitationData, error: inviteCheckError } = await supabase
+                .from("invitations")
+                .select("status")
+                .eq("id", invitationId.trim())
+                .single();
+
+            if (inviteCheckError || !invitationData) {
+                console.error("Failed to verify invitation:", inviteCheckError);
+                return {
+                    success: false,
+                    message: "Invalid invitation. Please contact the couple.",
+                };
+            }
+
+            if (invitationData.status === "responded") {
+                return {
+                    success: false,
+                    message: "This invitation has already been used. Please contact the couple if you need to change your response.",
+                };
+            }
+
             guestData.invitation_id = invitationId.trim();
         }
 

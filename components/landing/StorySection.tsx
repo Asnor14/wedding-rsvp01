@@ -157,6 +157,17 @@ export function StorySection() {
     // Keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            // Don't handle keyboard shortcuts when user is typing in form fields
+            const activeElement = document.activeElement;
+            const isInputFocused = activeElement instanceof HTMLInputElement ||
+                activeElement instanceof HTMLTextAreaElement ||
+                activeElement instanceof HTMLSelectElement ||
+                activeElement?.getAttribute('contenteditable') === 'true';
+
+            if (isInputFocused) {
+                return; // Let the input handle the keypress normally
+            }
+
             if (e.key === "ArrowLeft") {
                 goToPrevious();
                 setIsPlaying(false);

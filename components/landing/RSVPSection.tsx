@@ -7,6 +7,7 @@ import { Heart, X, Send, Loader2, Search, CheckCircle, AlertCircle } from "lucid
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { submitRSVP, getInvitationData, checkGuestStatus } from "@/app/actions";
 import { ConfirmationModal } from "./ConfirmationModal";
+import { supabase } from "@/lib/supabase";
 
 export function RSVPSection() {
     const searchParams = useSearchParams();
@@ -59,14 +60,6 @@ export function RSVPSection() {
                     if (result.status === 'responded') {
                         setIsInvitationUsed(true);
                     }
-
-                    // Pre-fill family name if available
-                    if (result.familyName) {
-                        setFormData((prev) => ({
-                            ...prev,
-                            name: result.familyName!,
-                        }));
-                    }
                 } else {
                     // Invalid invitation - use defaults
                     console.warn("Invalid invitation:", result.error);
@@ -79,6 +72,37 @@ export function RSVPSection() {
         }
 
         fetchInvitationData();
+    }, [inviteId]);
+
+    // Real-time subscription to detect if invitation is used by someone else
+    useEffect(() => {
+        if (!inviteId) return;
+
+        const channel = supabase
+            .channel(`invitation-${inviteId}`)
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'invitations',
+                    filter: `id=eq.${inviteId}`,
+                },
+                (payload) => {
+                    console.log('Invitation status changed:', payload);
+                    const newData = payload.new as { status?: string };
+                    if (newData && newData.status === 'responded') {
+                        setIsInvitationUsed(true);
+                        // Close the form modal if it's open
+                        setShowFormModal(false);
+                    }
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, [inviteId]);
 
     const handleCheckStatus = async (e: React.FormEvent) => {
