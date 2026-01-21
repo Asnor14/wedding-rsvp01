@@ -48,7 +48,7 @@ export function DressCodeSection() {
                                 </div>
                                 <div>
                                     <span className="block text-wedding-charcoal text-sm font-medium mb-1">Ladies:</span>
-                                    <span className="text-wedding-slate text-xs block mb-2">Long gown in shades of Neutral Pink</span>
+                                    <span className="text-wedding-slate text-xs block mb-2">Long gown / Long Dress / Formal Top and pants / Formal Jumpsuits in shades of Neutral Pink</span>
                                     <span className="text-wedding-slate/60 text-[9px] uppercase tracking-wider block mb-3">
                                         (Rosy Clay, Soft Peach, Light Apricot, Blush Nude, Soft Ivory)
                                     </span>
